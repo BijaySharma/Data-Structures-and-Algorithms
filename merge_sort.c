@@ -1,43 +1,93 @@
 #include<stdio.h>
-#include<conion.h>
+#include<stdlib.h>
+#include<conio.h>
 
-void merge(int a[], int left[], int right[]){
+void merge(int *A, int *L, int nL, int *R, int nR){
     
-    // finding the size of each array
-    int nL = sizeof left / sizeof int;
-    int nR = sizeof right / sizeof int;
-    int nA = sizeof a / sizeof int;
-
-    /* 
-    Let, i mark the smallest unpicked in left[]
-         j mark the smallest unpicked in right[]
-         k mark the index of a[] 
-    */
     int i = 0, j = 0, k = 0;
 
     while(i < nL && j < nR){
 
-        if(left[i] <= right[j]){
-            a[k] = left[i];
+        if(L[i] <= R[j]){
+            A[k] = L[i];
             i++;
         }else{
-            a[k] = right[j];
+            A[k] = R[j];
             j++;
         }
         k++;
     }
 
-    // in case we exhaust one of any two divided arrays - then we shall fill the contents of the other non exhausted array
-    // only one of the two while loops will execute. Since only one sub array will be left over
+    //fill leftover array
     while(i < nL){
-        a[k] = left[i];
+        A[k] = L[i];
         i++;
         k++;
     }
 
       while(j < nR){
-        a[k] = right[j];
+        A[k] = R[j];
         j++;
         k++;
     }
+}
+
+void sort(int *A, int n){
+    
+    // base condition
+    if(n < 2)
+        return;
+    
+    int *L, *R;
+    int mid;
+
+    mid = n / 2; // mid index
+
+    L = (int *) malloc(sizeof(int) * mid);
+    R = (int *) malloc(sizeof(int) * (n-mid));
+
+    for(int i = 0; i< mid; i++) // fill the left array
+        L[i] = A[i];
+
+    for(int i = mid; i<n; i++) // fill the right array
+        R[i-mid] = A[i];
+
+    // recursive call
+    sort(L, mid);
+    sort(R, n-mid);
+    merge(A, L, mid, R, n-mid);
+
+    // freeup allocated space after use.
+    free(L);
+    free(R);
+}
+
+void main(){
+ 
+	// let us take any array a
+	int a[] = {55,45,95,68,72,33,42,12,66,10,3,88,101,21};
+	// size of this array is 4
+
+	// displaying the values befor sorting
+	printf("Array before sorting : ");
+	for(int i=0; i < 14; i++){
+		printf("%d, ", a[i]);
+	}
+
+	printf("\n");
+
+	//sort
+	sort(a, 14);
+
+	//displaying the vlaues after sorting
+	printf("Array after sorting : ");
+	for(int i=0; i < 14; i++){
+		
+		printf("%d, ", a[i]);
+	
+	}
+	printf("\n");
+	
+	getch();
+				       
 }
