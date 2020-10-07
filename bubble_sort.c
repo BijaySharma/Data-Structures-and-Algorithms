@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<conio.h>
 
 void sort(int arr[], int s){
 
@@ -48,6 +47,5 @@ void main(){
 	}
 	printf("\n");
 	
-	getch();
 				       
 }
