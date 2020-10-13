@@ -33,6 +33,15 @@ void print(struct List list){
   printf("\n");
 }
 
+void printReverse(struct Node *p){
+  if(p == NULL)
+    return;
+
+  printReverse(p->next);
+  printf("%d ", p->data);
+  
+}
+
 void insertAtTail(struct List *list, int data){
   struct Node *newNode = getNewNode(data);
 
@@ -142,6 +151,7 @@ int main(){
   insertAtTail(&list, 7);
   insertAtHead(&list, 9);
   print(list);
+  printReverse(list.head); printf("\n");
   delete(&list, 5);
   print(list);
   insertAtTail(&list, 99);
