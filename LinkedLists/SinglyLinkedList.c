@@ -65,7 +65,6 @@ void insertAtHead(struct List *list, int data){
   list->head = newNode;
 }
 
-
 void delete(struct List *list, int index){
   if(list->head == NULL){
     printf("Error: List is empty. \n");
@@ -142,6 +141,20 @@ void deleteFromTail(struct List *list){
 
 }
 
+void reverseListIterative(struct List *list){
+  struct Node *current, *prev, *next;
+  current = list->head;
+  prev = NULL;
+
+  while(current != NULL){
+    next = current->next;
+    current->next = prev;
+    prev = current;
+    current = next;
+  }
+
+  list->head = prev;
+}
 
 int main(){
   struct List list = {NULL, NULL}; // create a new List
@@ -151,6 +164,7 @@ int main(){
   insertAtTail(&list, 7);
   insertAtHead(&list, 9);
   print(list);
+<<<<<<< HEAD
   printReverse(list.head); printf("\n");
   delete(&list, 5);
   print(list);
@@ -165,6 +179,9 @@ int main(){
   deleteFromHead(&list);
   print(list);
   deleteFromHead(&list);
+=======
+  reverseListIterative(&list);
+>>>>>>> e53d2dcdd8b3335fe2f60679f5b27af6a66ec9fb
   print(list);
 
   return 0;
